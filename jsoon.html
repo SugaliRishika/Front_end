@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>DEEP THOUGHT - Technical Project Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 70px;
+            height: auto;
+            width: 150px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background-color: #0040ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .brand span {
+            color: #0040ff;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-icon {
+            width: 35px;
+            height: 35px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .number-badge {
+            width: 32px;
+            height: 32px;
+            background-color: white;
+            color: black;
+            border-radius: 30%;
+            border-style:inset;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .submit-btn {
+            background-color: #2563eb;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .main-content {
+            padding: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .intro-section {
+            background-color: rgb(234, 231, 231);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: black;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-icon {
+            width: 24px;
+            height: 24px;
+            background: white;
+            color: black;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-style: italic;
+            cursor: pointer;
+        }
+
+        .card-content {
+            padding: 1rem;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .thread-section {
+            padding: 1rem;
+        }
+
+        .thread-header {
+            background: #f5f5f5;
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
+        .thread-header .arrow {
+            margin-right: 10px;
+            transition: transform 0.3s;
+        }
+
+        .thread-header.collapsed .arrow {
+            transform: rotate(-90deg);
+        }
+
+        .thread-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 1rem;
+        }
+
+        .sub-thread {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .sub-thread h4 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .icon-button {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            background: #eee;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .select-button {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .add-subthread {
+            background: #0066ff;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        .journey-board {
+            position: fixed;
+            left: -10px;
+            top: 80px;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+            transform: translateX(-90%);
+            transition: transform 0.3s;
+            z-index: 100;
+        }
+
+        .journey-board.active {
+            padding: 0px;
+            left: 0;
+            transform: translateX(0);
+        }
+
+        .journey-board ul {
+            display: none;
+        }
+
+        .journey-board.active ul {
+            display: block;
+            height: 50vh;
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .journey-toggle {
+            position: absolute;
+            right: -30px;
+            transform: translateY(-50%);
+            background: black;
+            color: white;
+            font-weight: 900;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .journey-toggle.active {
+            position: absolute;
+            right: 10px;
+            transform: translateY(-10%);
+            background: white;
+            color: black;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .notification-board {
+            position: absolute;
+            top: 0;
+            right: -155px;
+        }
+
+        .right-nav {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: black;
+            color: white;
+            padding: 1rem;
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+        }
+
+        .floating-buttons {
+            position: fixed;
+            right: 2rem;
+            bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .float-btn {
+            width: 48px;
+            height: 48px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .editor-toolbar {
+            display: flex;
+            gap: 1rem;
+            padding: 0.5rem;
+            background: #f5f5f5;
+            margin-top: 1rem;
+            border-radius: 4px;
+        }
+
+        .toolbar-item {
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+
+        .toolbar-item:hover {
+            background: #e5e5e5;
+            border-radius: 4px;
+        }
+
+        .sa-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .sa-section h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .see-more {
+            color: #2563eb;
+            text-decoration: none;
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background-color:rgb(234, 230, 230);">
+        <div class="nav-left" style="display: flex; align-items: center; height:50px; position: relative;">
+            <a href="https://deepthought.education" style="display: flex; align-items: center;">
+                <img src="https://deepthought.education/assets/images/logo/logo.svg" alt="Deep Thought Logo" width="250" height="auto" style="position: absolute; top: 50%; transform: translateY(-50%); max-height: none;">
+            </a>
+        </div>
+        
+        <div class="nav-right" style="display: flex; gap: 10px;">
+            <div class="nav-icon" style="background-color: rgb(8, 163, 206); color: white; padding: 10px; border-radius: 50%;">
+                <i class="fas fa-home"></i>
+            </div>
+            <div class="nav-icon" style="background-color: rgb(8, 163, 206); color: white; padding: 10px; border-radius: 50%;">
+                <i class="fas fa-binoculars"></i>
+            </div>
+            <div class="nav-icon" style="background-color: rgb(8, 163, 206); color: white; padding: 10px; border-radius: 50%;">
+                <i class="fas fa-wrench"></i>
+            </div>
+            <div class="nav-icon" style="background-color: rgb(8, 163, 206); color: white; padding: 10px; border-radius: 50%;">
+                <i class="fas fa-bell"></i>
+            </div>
+            <div class="nav-icon" style="background-color: rgb(8, 163, 206); color: white; padding: 10px; border-radius: 50%;">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+        
+    </nav>
+
+    <header class="header">
+        <div class="header-left">
+            <div class="number-badge" style="margin-top: 10x; margin-left:50px">1</div>
+            <h1 style="color: blue;">Technical Project Management</h1>
+        </div>
+        <button class="submit-btn">Submit Task</button>
+    </header>
+
+    <main class="main-content">
+        <div class="intro-section">
+            <h2>Explore the world of management</h2>
+            <p>As a project manager, you play an important role in leading a project through initiation, planning,
+                execution, monitoring, controlling and completion. How? Do you want to manage each and every step of
+                your life?</p>
+        </div>
+
+        <div class="journey-board">
+            <div style="display: flex; align-items: center; background-color: black; color: white;">
+                <button class="journey-toggle">→</button>
+                <h3 style="padding: 0.7rem;">Journey Board</h3>
+            </div>
+            <div>
+                <ul style="padding-left: 40px; padding-right: 40px; list-style-type: disc;">
+                    <li><b>Explore the world of management</b></li>
+                    <br />
+                    <div style="line-height: 25px;">
+                        <li>Technical Project Management</li>
+                        <li>Threadbuild</li>
+                        <li>Structure your pointers</li>
+                        <li>4SA Method</li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+
+        <div class="notification-board">
+            <div style="height: 320px; width: 80px; display: flex;">
+                <div
+                    style="background-color: black; width: 40px; border-top-left-radius: 40px; border-bottom-left-radius: 40px; color: white; padding-left: 15px; padding-top: 20px;">
+                    <p style="font-size: 25px;">X</p>
+                    <br />
+                    <p>N</p>
+                    <p>o</p>
+                    <p>t</p>
+                    <p>i</p>
+                    <p>c</p>
+                    <p>e</p>
+                    <br />
+                    <p>B</p>
+                    <p>o</p>
+                    <p>a</p>
+                    <p>r</p>
+                    <p>d</p>
+                </div>
+                <div style="background-color: white; width: 40px;"></div>
+            </div>
+        </div>
+
+        <div class="grid-container" id="card-container">
+            <!-- Cards will be injected here by JavaScript -->
+        </div>
+
+            <script>
+                // Journey Board Toggle Functionality
+                const journeyBoard = document.querySelector('.journey-board');
+                const journeyToggle = document.querySelector('.journey-toggle');
+
+                journeyToggle.addEventListener('click', () => {
+                    journeyBoard.classList.toggle('active');
+                    journeyToggle.classList.toggle('active');
+                    journeyToggle.textContent = journeyBoard.classList.contains('active') ? '←' : '→';
+                });
+
+                // Define card data
+        const cardsData = [
+        {
+            title: "Technical Project Management",
+            description: "Story of Alignment<br>Scope of Agility<br>Specific Accountable<br>Staggering Approach",
+            videoUrl: "https://www.youtube.com/embed/TiMRwri1xJ8"
+        },
+        {
+            title: "Threadbuild",
+            description: "Watch the video and thread build, and jot out key threads while watching that video.",
+            hasThreadSection: true
+        },
+        {
+            title: "Structure your pointers",
+            description: "Write a 400-500 word article, from your thread. Publish your understanding, and showcase your learning to the entire world.",
+            hasEditor: true
+        },
+        {
+            title: "4SA Method",
+            description: "The 4SA Method - How to bring an idea into progress? How am I going to develop your idea/op? Which method are you going to use to develop a strategy? What if the project is lengthy?",
+            sections: [
+                { heading: "Introduction", link: "#", content: "The 4SA Method - How to bring an idea into progress?" },
+                { heading: "Thread A", link: "#", content: "How am I going to develop your idea/op? Which method are you going to use to develop a strategy?" },
+                { heading: "Example 1", content: "You have a concept - How will you put into progress?" }
+            ]
+        }
+    ];
+
+    // Function to create and append cards dynamically
+    function renderCards(cards) {
+        const container = document.getElementById('card-container');
+        container.innerHTML = '';
+
+        cards.forEach(card => {
+            const cardElement = document.createElement('div');
+            cardElement.classList.add('card');
+            
+            // Card header
+            const header = document.createElement('div');
+            header.classList.add('card-header');
+            header.innerHTML = `<h3>${card.title}</h3><span class="info-icon">i</span>`;
+            cardElement.appendChild(header);
+            
+            // Card content
+            const content = document.createElement('div');
+            content.classList.add('card-content');
+            
+            if (card.description) {
+                content.innerHTML += `<p>${card.description}</p>`;
+            }
+
+            // Video container (if video URL provided)
+            if (card.videoUrl) {
+                const videoContainer = document.createElement('div');
+                videoContainer.classList.add('video-container');
+                videoContainer.innerHTML = `<iframe src="${card.videoUrl}" frameborder="0" allowfullscreen></iframe>`;
+                content.appendChild(videoContainer);
+            }
+
+            // Thread section (if applicable)
+            if (card.hasThreadSection) {
+                const threadSection = document.createElement('div');
+                threadSection.classList.add('thread-section');
+                threadSection.innerHTML = `
+                    <div class="thread-header">
+                        <span class="arrow">▼</span>
+                        <span>Thread A</span>
+                    </div>
+                    <div class="thread-content">
+                        <div class="sub-thread">
+                            <h4>Sub thread 1</h4>
+                            <textarea placeholder="Enter text here"></textarea>
+                            <div class="action-buttons">
+                                <button class="icon-button">💡</button>
+                                <button class="icon-button">💭</button>
+                                <button class="icon-button">❓</button>
+                                <button class="icon-button">🍃</button>
+                            </div>
+                        </div>
+                        <div class="sub-thread">
+                            <h4>Sub Interpretation 1</h4>
+                            <textarea placeholder="Enter text here"></textarea>
+                            <div class="action-buttons">
+                                <select class="select-button">
+                                    <option>Select Categ</option>
+                                </select>
+                                <select class="select-button">
+                                    <option>Select Proces</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="add-subthread">+ Sub-thread</button>
+                    <div class="thread-section">
+                        <h4>Summary for Thread A</h4>
+                        <textarea placeholder="Enter summary here"></textarea>
+                    </div>`;
+                content.appendChild(threadSection);
+            }
+
+            // Editor (if applicable)
+            if (card.hasEditor) {
+                content.innerHTML += `
+                    <textarea placeholder="Title" style="margin-top: 1rem; height: 40px;"></textarea>
+                    <div class="editor-toolbar">
+                        <span class="toolbar-item">File</span>
+                        <span class="toolbar-item">Edit</span>
+                        <span class="toolbar-item">View</span>
+                        <span class="toolbar-item">Insert</span>
+                        <span class="toolbar-item">Format</span>
+                        <span class="toolbar-item">Tools</span>
+                        <span class="toolbar-item">Table</span>
+                        <span class="toolbar-item">Help</span>
+                    </div>
+                    <textarea placeholder="Write your article here..." style="margin-top: 1rem; height: 200px;"></textarea>`;
+            }
+
+            // 4SA sections (if applicable)
+            if (card.sections) {
+                card.sections.forEach(section => {
+                    const sectionElement = document.createElement('div');
+                    sectionElement.classList.add('sa-section');
+                    sectionElement.innerHTML = `
+                        <h3>${section.heading} <a href="${section.link}" class="see-more">See More</a></h3>
+                        <p>${section.content}</p>`;
+                    content.appendChild(sectionElement);
+                });
+            }
+
+            cardElement.appendChild(content);
+            container.appendChild(cardElement);
+        });
+    }
+
+    // Render the cards on page load
+    renderCards(cardsData);
+            </script>
+</body>
+
+</html>
